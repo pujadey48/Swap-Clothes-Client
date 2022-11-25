@@ -6,6 +6,8 @@ import Form from "react-bootstrap/Form";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import {
   AuthContext,
+  getJWT,
+  normalizeUserData
   
 } from "../../contexts/AuthProvider/AuthProvider.js";
 const Signup = () => {
@@ -16,8 +18,9 @@ const Signup = () => {
 
   const from = location.state?.from?.pathname || "/";
 
-  const loginDone = (user) => {
-    // getJWT(user);
+  const loginDone = (userData) => {
+    console.log("user", userData);
+    getJWT(user);
     console.log(from);
     navigate(from, { replace: true });
   };
@@ -25,16 +28,17 @@ const Signup = () => {
   const handleSignUp = (event) => {
     event.preventDefault();
     const form = event.target;
+    console.log("form", form);
     const email = form.email.value;
     const password = form.password.value;
+    const role = form.role.value;
 
-    createUser(email, password)
+    createUser(email, password, role)
       .then((result) => {
-        const user = result.user;
-        console.log(user);
+        const userData = normalizeUserData(result.user);
         form.reset();
         setError("");
-        loginDone(user);
+        loginDone(userData);
       })
       .catch((e) => {
         console.error(e);
@@ -75,6 +79,13 @@ const Signup = () => {
               required
             />
           </Form.Group>
+          <Form.Group className="mb-3">
+          <Form.Label >Select role</Form.Label>
+          <Form.Select id="role" name="role">
+            <option value="buyer">Buyer</option>
+            <option value="seller">Seller</option>
+          </Form.Select>
+        </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
             <Form.Check type="checkbox" label="Check me out" />
           </Form.Group>

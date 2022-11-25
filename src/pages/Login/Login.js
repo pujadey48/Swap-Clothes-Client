@@ -8,6 +8,8 @@ import Form from "react-bootstrap/Form";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import {
   AuthContext,
+  getJWT,
+  normalizeUserData
 
 } from "../../contexts/AuthProvider/AuthProvider.js"
 
@@ -20,9 +22,9 @@ const Login = () => {
 
   const from = location.state?.from?.pathname || "/";
 
-  const loginDone = (user) => {
-    // getJWT(user);
-    console.log(from);
+  const loginDone = (userData) => {
+    console.log("user", userData);
+    getJWT(userData);
     navigate(from, { replace: true });
   };
 
@@ -31,10 +33,9 @@ const Login = () => {
   const handleGoogleSignIn = () => {
     providerLogin(googleProvider)
       .then((result) => {
-        const user = result.user;
-        console.log(user);
+        const userData = normalizeUserData(result.user);
         setError("");
-        loginDone(user);
+        loginDone(userData);
       })
       .catch((error) => console.error(error))
       .finally(() => {
@@ -45,16 +46,17 @@ const Login = () => {
   const handleLogIn = (event) => {
     event.preventDefault();
     const form = event.target;
+    console.log("form", form);
     const email = form.email.value;
     const password = form.password.value;
+    const role = form.role.value;
 
-    login(email, password)
+    login(email, password, role)
       .then((result) => {
-        const user = result.user;
-        console.log(user);
+        const userData = normalizeUserData(result.user);
         form.reset();
         setError("");
-        loginDone(user);
+        loginDone(userData);
       })
       .catch((error) => {
         console.error(error);
@@ -90,6 +92,13 @@ const Login = () => {
               name="password"
               placeholder="Password"
             />
+            <Form.Group className="mb-3">
+          <Form.Label >Select role</Form.Label>
+          <Form.Select id="role" name="role">
+            <option value="buyer">Buyer</option>
+            <option value="seller">Seller</option>
+          </Form.Select>
+        </Form.Group>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicCheckbox">
             <Form.Check type="checkbox" label="Check me out" />

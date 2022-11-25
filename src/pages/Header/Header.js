@@ -10,7 +10,7 @@ import {
   Navbar,
 } from "react-bootstrap";
 import { GoogleAuthProvider } from "firebase/auth";
-import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
+import { AuthContext, getJWT, normalizeUserData } from "../../contexts/AuthProvider/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { FaSignOutAlt } from "react-icons/fa";
@@ -27,11 +27,9 @@ const Header = () => {
       .catch((error) => console.error(error));
   };
 
-  const loginDone = (user) => {
-    // getJWT(user);
-    if (user) {
-      console.log(user);
-    }
+  const loginDone = (userData) => {
+    getJWT(userData);
+    console.log("user", userData);
     const from = location.state?.from?.pathname || "/";
     if (from) {
       navigate(from, { replace: true });
@@ -43,7 +41,8 @@ const Header = () => {
   const handleGoogleSignIn = () => {
     providerLogin(googleProvider)
       .then((result) => {
-        loginDone(result.user);
+        const userData = normalizeUserData(result.user);
+        loginDone(userData);
       })
       .catch((error) => console.error(error));
   };
