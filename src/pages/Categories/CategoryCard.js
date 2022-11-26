@@ -1,19 +1,20 @@
 import React from 'react';
 import { Button, Card } from 'react-bootstrap';
 
-const CategoryCard = () => {
+const CategoryCard = ({category}) => {
+  const {_id, name, image}=category;
     return (
-        <div>
-            <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="holder.js/100px180" />
-      <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
+      <div className=" col-lg-4 col-md-6 col-12 p-1">
+            <Card style={{ }}>
+      <Card.Img variant="top" src={image} />
+      <Card.ImgOverlay>
+        <Card.Title>{name}</Card.Title>
+        {/* <Card.Text>
+          This is a wider card with supporting text below as a natural lead-in
+          to additional content. This content is a little bit longer.
         </Card.Text>
-        <Button variant="primary">Go somewhere</Button>
-      </Card.Body>
+        <Card.Text>Last updated 3 mins ago</Card.Text> */}
+      </Card.ImgOverlay>
     </Card>
         </div>
     );

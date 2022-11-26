@@ -23,6 +23,10 @@ import { FaSignOutAlt } from "react-icons/fa";
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
   const { providerLogin } = useContext(AuthContext);
+
+  const isBuyer = user?.role=== "buyer";
+  const isSeller = user?.role=== "seller";
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -89,7 +93,10 @@ const Header = () => {
               title="DashBoard"
               menuVariant="dark"
             >
-              <NavDropdown.Item href="#action/3.1">AddProducts</NavDropdown.Item>
+              {
+                user && isBuyer &&
+                <NavDropdown.Item href="#action/3.1">AddProducts</NavDropdown.Item>
+              }
               <NavDropdown.Item href="#action/3.2">
                 MyOrders
               </NavDropdown.Item>

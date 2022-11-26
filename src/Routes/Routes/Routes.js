@@ -8,6 +8,8 @@ import DashboardLauout from "../../layout/DashboardLayout";
 import MyOrders from "../../pages/Dashboard/MyOrders/MyOrders";
 import AddProducts from "../../pages/Dashboard/AddProducts/AddProducts";
 import MyProducts from "../../pages/Dashboard/Myproducts/MyProducts";
+import Categories from "../../pages/Categories/Categories";
+import { getUrl } from "../../Util/Util";
 
 export const routes = createBrowserRouter([
     {
@@ -30,6 +32,11 @@ export const routes = createBrowserRouter([
                 path:"/logout",
                 element:<Logout></Logout>,
             },
+            {
+                path:"/categories",
+                element:<Categories></Categories>,
+                
+            }
         ]
     },
     {
@@ -48,7 +55,8 @@ export const routes = createBrowserRouter([
             {
                 path: "/dashboard/myProducts",
                 element: <MyProducts></MyProducts>,
-            }
+            },
+            
         ]
     }
 ])
