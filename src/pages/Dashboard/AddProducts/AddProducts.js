@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import { getUrl } from '../../../Util/Util';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddProducts = () => {
+
     const [categories, setCategories] = useState([]);
     console.log(categories);
+
+    const [error, setError] = useState("");
+
+  const showToastMessage = () => {
+    toast.success("Successfully added!", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
 
     useEffect(() => {
         fetch(getUrl(`/categories`), {
@@ -20,11 +31,59 @@ const AddProducts = () => {
     
     const handleSignUp = (event) => {
         event.preventDefault();
-        // const form = event.target;
-        // console.log("form", form);
-        // const email = form.email.value;
-        // const password = form.password.value;
-        // const role = form.role.value;
+        const form = event.target;
+        console.log("form", form);
+        const name = form.name.value;
+        const selling_price = form.selling_price.value;
+        const location = form.location.value;
+        const mobile_number = form.mobile_number.value;
+        const description = form.description.value;
+        const buying_price = form.buying_price.value;
+        const years_of_purchase = form.years_of_purchase.value;
+        const categories = form.categories.value;
+        const show_in_ad = form.show_in_ad.value;
+        const url = form.url.value;
+        const condition = form.condition.value;
+
+        const addProduct = {
+            name: name,
+            selling_price: selling_price,
+            location: location,
+            mobile_number: mobile_number,
+            description: description,
+            buying_price: buying_price,
+            years_of_purchase: years_of_purchase,
+            categories: categories,
+            show_in_ad: show_in_ad,
+            url: url,
+            condition: condition,
+          };
+      
+          fetch(getUrl("/product"), {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
+            },
+            body: JSON.stringify(addProduct),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              console.log(data);
+              if (data.acknowledged) {
+                //  alert("Service added successfully");
+                showToastMessage();
+      
+                form.reset();
+                setError("");
+              }
+            })
+            .catch((er) => {
+              console.error(er);
+              setError(er.message);
+            });
+        };
+        
     
         // createUser(email, password, role)
         //   .then((result) => {
@@ -37,10 +96,10 @@ const AddProducts = () => {
         //     console.error(e);
         //     setError(e.message);
         //   });
-      };
+      
     return (
         <Container>
-            <h2>AddProduct</h2>
+            <h2>Add Product</h2>
             <Form className='p-5' onSubmit={handleSignUp} >
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Name</Form.Label>
@@ -71,6 +130,27 @@ const AddProducts = () => {
               required
             />
           </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Image Url</Form.Label>
+            <Form.Control
+              type="text"
+              name="url"
+              placeholder="Image Url"
+              required
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+          <Form.Label >Condition</Form.Label>
+          <Form.Select id="condition" name="condition">
+            <option value="Excellent">Excellent</option>
+            <option value="Good">Good</option>
+            <option value="Fair">Fair</option>
+            
+
+          </Form.Select>
+        </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>Mobile Number</Form.Label>
