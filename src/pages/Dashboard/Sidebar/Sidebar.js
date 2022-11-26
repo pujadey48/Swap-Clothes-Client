@@ -1,56 +1,113 @@
-import React from 'react'
+import React, { useContext } from "react";
 import {
-    CDBSidebar,
-    CDBSidebarContent,
-    CDBSidebarFooter,
-    CDBSidebarHeader,
-    CDBSidebarMenu,
-    CDBSidebarMenuItem,
-  } from 'cdbreact';
-  import { NavLink } from 'react-router-dom';
+  CDBSidebar,
+  CDBSidebarContent,
+  CDBSidebarFooter,
+  CDBSidebarHeader,
+  CDBSidebarMenu,
+  CDBSidebarMenuItem,
+} from "cdbreact";
+import { NavLink, Outlet } from "react-router-dom";
+import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
+import SellerOptions from "./SellerOptions";
+import Options from "./Options";
 const Sidebar = () => {
-    return (
-        <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
-      <CDBSidebar textColor="#fff" backgroundColor="#333">
+  const { user } = useContext(AuthContext);
+  console.log(user);
+  const isBuyer = user?.role === "buyer";
+  const isSeller = user?.role === "seller";
+
+  
+  return (
+    <div
+      style={{ display: "flex", height: "100vh", overflow: "scroll initial" }}
+    >
+      <CDBSidebar textColor="Red" backgroundColor="#f8f9fa">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-          <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
-            Sidebar
+          <a
+            href="/dashboard"
+            className="text-decoration-none"
+            style={{ color: "inherit" }}
+          >
+            Dashboard
           </a>
         </CDBSidebarHeader>
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-            <NavLink exact to="/" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="columns">Dashboard</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/tables" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="table">Tables</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/profile" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="user">Profile page</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/analytics" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="chart-line">Analytics</CDBSidebarMenuItem>
+             {/* {user && isSeller && (
+              <NavLink
+                exact
+                to="/dashboard/addProducts"
+                activeClassName="activeClicked"
+                style={{ color: "inherit" }}
+              >
+                <CDBSidebarMenuItem icon="plus-square">
+                  Add Produtcs
+                </CDBSidebarMenuItem>
+              </NavLink>
+            )}
+         
+            {user && isBuyer && (
+              <NavLink
+                exact
+                to="/dashboard/myOrders"
+                activeClassName="activeClicked"
+                style={{ color: "inherit" }}
+              >
+                <CDBSidebarMenuItem icon="heart">My Orders</CDBSidebarMenuItem>
+              </NavLink>
+            )}
+               
+            {user && isSeller && (
+              <NavLink
+                exact
+                to="/dashboard/myProducts"
+                activeClassName="activeClicked"
+                style={{ color: "inherit" }}
+              >
+                <CDBSidebarMenuItem icon="window-maximize">
+                  My products
+                </CDBSidebarMenuItem>
+              </NavLink>
+            )} */}
+            <Options isBuyer={isBuyer} isSeller={isSeller}></Options>
+            <NavLink
+              exact
+              to="/analytics"
+              activeClassName="activeClicked"
+              style={{ color: "inherit" }}
+            >
+              <CDBSidebarMenuItem icon="camera-retro">
+                Analytics
+              </CDBSidebarMenuItem>
             </NavLink>
 
-            <NavLink exact to="/hero404" target="_blank" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="exclamation-circle">404 page</CDBSidebarMenuItem>
+            <NavLink
+              exact
+              to="/hero404"
+              target="_blank"
+              activeClassName="activeClicked"
+              style={{ color: "inherit" }}
+            >
+              <CDBSidebarMenuItem icon="">404 page</CDBSidebarMenuItem>
             </NavLink>
           </CDBSidebarMenu>
         </CDBSidebarContent>
 
-        <CDBSidebarFooter style={{ textAlign: 'center' }}>
+        <CDBSidebarFooter style={{ textAlign: "center" }}>
           <div
             style={{
-              padding: '20px 5px',
+              padding: "20px 5px",
             }}
           >
             Sidebar Footer
           </div>
         </CDBSidebarFooter>
       </CDBSidebar>
+      <Outlet></Outlet>
     </div>
-    );
+  );
 };
 
 export default Sidebar;

@@ -24,8 +24,8 @@ const Header = () => {
   const { user, logOut } = useContext(AuthContext);
   const { providerLogin } = useContext(AuthContext);
 
-  const isBuyer = user?.role=== "buyer";
-  const isSeller = user?.role=== "seller";
+  const isBuyer = user?.role === "buyer";
+  const isSeller = user?.role === "seller";
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -59,7 +59,6 @@ const Header = () => {
     <div>
       <Navbar
         collapseOnSelect
-        className="mb-4"
         expand="lg"
         bg="light"
         variant="light"
@@ -86,29 +85,11 @@ const Header = () => {
             <Nav.Item>
               <Nav.Link href="/blogs">Blogs</Nav.Link>
             </Nav.Item>
-
-            {user &&(
-              <NavDropdown
-              id="nav-dropdown-dark-example"
-              title="DashBoard"
-              menuVariant="dark"
-            >
-              {
-                user && isBuyer &&
-                <NavDropdown.Item href="#action/3.1">AddProducts</NavDropdown.Item>
-              }
-              <NavDropdown.Item href="#action/3.2">
-                MyOrders
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">MyProducts</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
-            )
-
-            }
+            {user && (
+              <Nav.Item>
+                <Nav.Link href="/dashboard">Dashboard</Nav.Link>
+              </Nav.Item>
+            )}
 
             {!user && (
               <Nav.Item>

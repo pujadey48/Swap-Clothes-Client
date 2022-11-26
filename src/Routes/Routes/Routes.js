@@ -10,6 +10,8 @@ import AddProducts from "../../pages/Dashboard/AddProducts/AddProducts";
 import MyProducts from "../../pages/Dashboard/Myproducts/MyProducts";
 import Categories from "../../pages/Categories/Categories";
 import { getUrl } from "../../Util/Util";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import DisplayError from "../../pages/DisplayError/DisplayError";
 
 export const routes = createBrowserRouter([
     {
@@ -41,7 +43,8 @@ export const routes = createBrowserRouter([
     },
     {
         path:'/dashboard',
-        element:<DashboardLauout></DashboardLauout>,
+        element:<PrivateRoute><DashboardLauout></DashboardLauout></PrivateRoute>,
+        errorElement: <DisplayError></DisplayError>,
         children:[
             {
                 path:"/dashboard/addProducts",

@@ -8,7 +8,7 @@ const CategoryCard = ({category}) => {
             <Card style={{ }}>
       <Card.Img variant="top" src={image} />
       <Card.ImgOverlay>
-        <Card.Title>{name}</Card.Title>
+        <Card.Title className=''>{name}</Card.Title>
         {/* <Card.Text>
           This is a wider card with supporting text below as a natural lead-in
           to additional content. This content is a little bit longer.
