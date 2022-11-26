@@ -11,12 +11,16 @@ import { NavLink, Outlet } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
 import SellerOptions from "./SellerOptions";
 import Options from "./Options";
+import useAdmin from "../../../hooks/useAdmin";
 const Sidebar = () => {
   const { user } = useContext(AuthContext);
   console.log(user);
+
   const isBuyer = user?.role === "buyer";
   const isSeller = user?.role === "seller";
+  const [isAdmin] = useAdmin(user?.uid);
 
+  console.log("isadmin", isAdmin);
   
   return (
     <div
@@ -35,63 +39,8 @@ const Sidebar = () => {
 
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-             {/* {user && isSeller && (
-              <NavLink
-                exact
-                to="/dashboard/addProducts"
-                activeClassName="activeClicked"
-                style={{ color: "inherit" }}
-              >
-                <CDBSidebarMenuItem icon="plus-square">
-                  Add Produtcs
-                </CDBSidebarMenuItem>
-              </NavLink>
-            )}
-         
-            {user && isBuyer && (
-              <NavLink
-                exact
-                to="/dashboard/myOrders"
-                activeClassName="activeClicked"
-                style={{ color: "inherit" }}
-              >
-                <CDBSidebarMenuItem icon="heart">My Orders</CDBSidebarMenuItem>
-              </NavLink>
-            )}
-               
-            {user && isSeller && (
-              <NavLink
-                exact
-                to="/dashboard/myProducts"
-                activeClassName="activeClicked"
-                style={{ color: "inherit" }}
-              >
-                <CDBSidebarMenuItem icon="window-maximize">
-                  My products
-                </CDBSidebarMenuItem>
-              </NavLink>
-            )} */}
-            <Options isBuyer={isBuyer} isSeller={isSeller}></Options>
-            <NavLink
-              exact
-              to="/analytics"
-              activeClassName="activeClicked"
-              style={{ color: "inherit" }}
-            >
-              <CDBSidebarMenuItem icon="camera-retro">
-                Analytics
-              </CDBSidebarMenuItem>
-            </NavLink>
-
-            <NavLink
-              exact
-              to="/hero404"
-              target="_blank"
-              activeClassName="activeClicked"
-              style={{ color: "inherit" }}
-            >
-              <CDBSidebarMenuItem icon="">404 page</CDBSidebarMenuItem>
-            </NavLink>
+            <Options isBuyer={isBuyer} isSeller={isSeller} isAdmin={isAdmin}></Options>
+            
           </CDBSidebarMenu>
         </CDBSidebarContent>
 
