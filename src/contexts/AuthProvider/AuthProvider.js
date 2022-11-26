@@ -5,6 +5,7 @@ import app from '../../firebase/firebase.config';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { getUrl } from '../../Util/Util';
+import useAdmin from '../../hooks/useAdmin';
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
@@ -45,6 +46,7 @@ export const normalizeUserData = (userData) => {
 const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const [role, setRole] = useState('buyer');
+    const [isAdmin, setIsAdmin] = useState(false);
     const [loading, setLoading] = useState(true);
 
 

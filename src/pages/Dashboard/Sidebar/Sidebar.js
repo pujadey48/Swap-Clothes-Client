@@ -50,7 +50,7 @@ const Sidebar = () => {
               padding: "20px 5px",
             }}
           >
-            Sidebar Footer
+            ©2025. SWAP CLOTHES
           </div>
         </CDBSidebarFooter>
       </CDBSidebar>
