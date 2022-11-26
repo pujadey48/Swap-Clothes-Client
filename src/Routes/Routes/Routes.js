@@ -4,6 +4,10 @@ import Home from "../../pages/Home/Home";
 import Login from "../../pages/Login/Login";
 import Logout from "../../pages/Logout/Logout";
 import Signup from "../../pages/Signup/Signup";
+import DashboardLauout from "../../layout/DashboardLayout";
+import MyOrders from "../../pages/Dashboard/MyOrders/MyOrders";
+import AddProducts from "../../pages/Dashboard/AddProducts/AddProducts";
+import MyProducts from "../../pages/Dashboard/Myproducts/MyProducts";
 
 export const routes = createBrowserRouter([
     {
@@ -26,6 +30,25 @@ export const routes = createBrowserRouter([
                 path:"/logout",
                 element:<Logout></Logout>,
             },
+        ]
+    },
+    {
+        path:'/dashboard',
+        element:<DashboardLauout></DashboardLauout>,
+        children:[
+            {
+                path:"/dashboard/addProducts",
+                element: <AddProducts></AddProducts>,
+
+            },
+            {
+                path:'/dashboard/myOrders',
+                element: <MyOrders></MyOrders>
+            },
+            {
+                path: "/dashboard/myProducts",
+                element: <MyProducts></MyProducts>,
+            }
         ]
     }
 ])

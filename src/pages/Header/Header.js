@@ -8,9 +8,14 @@ import {
   ButtonGroup,
   DropdownButton,
   Navbar,
+  NavDropdown,
 } from "react-bootstrap";
 import { GoogleAuthProvider } from "firebase/auth";
-import { AuthContext, getJWT, normalizeUserData } from "../../contexts/AuthProvider/AuthProvider";
+import {
+  AuthContext,
+  getJWT,
+  normalizeUserData,
+} from "../../contexts/AuthProvider/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { FaSignOutAlt } from "react-icons/fa";
@@ -77,6 +82,26 @@ const Header = () => {
             <Nav.Item>
               <Nav.Link href="/blogs">Blogs</Nav.Link>
             </Nav.Item>
+
+            {user &&(
+              <NavDropdown
+              id="nav-dropdown-dark-example"
+              title="DashBoard"
+              menuVariant="dark"
+            >
+              <NavDropdown.Item href="#action/3.1">AddProducts</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">
+                MyOrders
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">MyProducts</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="#action/3.4">
+                Separated link
+              </NavDropdown.Item>
+            </NavDropdown>
+            )
+
+            }
 
             {!user && (
               <Nav.Item>
