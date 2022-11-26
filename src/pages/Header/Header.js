@@ -67,7 +67,7 @@ const Header = () => {
           <Navbar.Brand href="/" className="fs-2 fw-semibold text-danger">
             <img
               alt=""
-              src="/myLogo.png"
+              src="/logo3.jpeg"
               width="50"
               height="50"
               className="d-inline-block align-top"

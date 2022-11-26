@@ -3,9 +3,10 @@ import { Button, Container, Form } from 'react-bootstrap';
 import { getUrl } from '../../../Util/Util';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from 'react-router-dom';
 
 const AddProducts = () => {
-
+    const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
     console.log(categories);
 
@@ -76,6 +77,9 @@ const AddProducts = () => {
       
                 form.reset();
                 setError("");
+
+
+                navigate('/dashboard/myProducts', { replace: true });
               }
             })
             .catch((er) => {
@@ -100,6 +104,7 @@ const AddProducts = () => {
     return (
         <Container>
             <h2>Add Product</h2>
+            <ToastContainer></ToastContainer>
             <Form className='p-5' onSubmit={handleSignUp} >
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Name</Form.Label>
