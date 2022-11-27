@@ -42,7 +42,7 @@ const AddProducts = () => {
         const buying_price = form.buying_price.value;
         const years_of_purchase = form.years_of_purchase.value;
         const categories = form.categories.value;
-        const show_in_ad = form.show_in_ad.value;
+        const show_in_ad = form.show_in_ad.checked;
         const url = form.url.value;
         const condition = form.condition.value;
 
