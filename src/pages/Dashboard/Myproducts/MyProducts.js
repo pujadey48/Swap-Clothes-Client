@@ -72,7 +72,8 @@ const MyProducts = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            if (data.deletedCount > 0) {
+            console.log(data);
+            if (data.modifiedCount > 0) {
                 refetch();
                 showAdvertiseToastMessage();
             }
