@@ -24,7 +24,7 @@ const ReportedProducts = () => {
 
   useEffect(() => {
     refetch();
-  }, []);
+  }, [refetch]);
 
   const showDeleteToastMessage = () => {
     toast.success("Successfully deleted!", {

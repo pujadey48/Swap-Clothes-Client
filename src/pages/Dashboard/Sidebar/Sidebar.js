@@ -5,11 +5,10 @@ import {
   CDBSidebarFooter,
   CDBSidebarHeader,
   CDBSidebarMenu,
-  CDBSidebarMenuItem,
 } from "cdbreact";
-import { NavLink, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
-import SellerOptions from "./SellerOptions";
+
 import Options from "./Options";
 import useAdmin from "../../../hooks/useAdmin";
 const Sidebar = () => {

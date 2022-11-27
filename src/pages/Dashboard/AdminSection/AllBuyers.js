@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getUrl } from "../../../Util/Util";
 import Table from 'react-bootstrap/Table';
@@ -24,7 +24,7 @@ const AllBuyers = () => {
 
   useEffect(() => {
     refetch();
-  }, []);
+  }, [refetch]);
 
   const showDeleteToastMessage = () => {
     toast.success("Successfully deleted!", {

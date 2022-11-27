@@ -3,17 +3,54 @@ import { Container } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import { useLoaderData } from "react-router-dom";
-import { timestampToDate } from "../../Util/Util";
+import { getUrl, timestampToDate } from "../../Util/Util";
 import { FaCheckCircle } from 'react-icons/fa';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 
 const ShowCategoryProducts = () => {
   const products = useLoaderData();
 
   
 
+  const showVerifiedSuccessfullyToast = () => {
+    toast.success("Product reported successfully", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+
+  const reportProduct= (id)=>{
+    const proceed = window.confirm(
+        "Do you want to report this product?"
+      );
+      if (proceed) {
+        // fetch(getUrl(`/reportProduct/${id}`), {
+        //   method: "PATCH"
+        // })
+        //   .then((res) => res.json())
+        //   .then((data) => {
+        //     console.log(data);
+        //     if (data.modifiedCount > 0) {
+        //         showVerifiedSuccessfullyToast();
+        //     }
+        //   });
+        axios.patch(getUrl(`/reportProduct/${id}`))
+          .then((res) => res.data)
+          .then((data) => {
+            console.log(data);
+            if (data.modifiedCount > 0) {
+                showVerifiedSuccessfullyToast();
+            }
+          });
+      }
+  }
+
+
   return (
     <Container>
       <div className="d-flex flex-wrap">
+        <ToastContainer/>
         {products.map((product) => (
           //   <Card style={{ width: "18rem" }}>
           <div className=" col-lg-3 col-md-6 col-12 p-1">
@@ -42,7 +79,7 @@ const ShowCategoryProducts = () => {
               </ListGroup>
               <Card.Body>
                 <Card.Link href="#">Book Now</Card.Link>
-                <Card.Link href="#">Report</Card.Link>
+                <Card.Link onClick={()=>reportProduct(product._id)}>Report</Card.Link>
               </Card.Body>
             </Card>
           </div>
