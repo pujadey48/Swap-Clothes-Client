@@ -6,13 +6,13 @@ import Form from "react-bootstrap/Form";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import {
   AuthContext,
-  getJWT,
+  // getJWT,
   normalizeUserData
   
 } from "../../contexts/AuthProvider/AuthProvider.js";
 const Signup = () => {
   const [error, setError] = useState();
-  const { createUser, user, setUser } = useContext(AuthContext);
+  const { createUser, user } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -20,8 +20,12 @@ const Signup = () => {
 
   const loginDone = (userData) => {
     console.log("user", userData);
-    setUser(userData);
-    getJWT(userData);
+    // updateUser(userData);
+    // getJWT(userData);
+    // if(!localStorage.getItem("jwt-token")){
+    //   handleLogOut();
+    //   return;
+    // }
     console.log(from);
     navigate(from, { replace: true });
   };

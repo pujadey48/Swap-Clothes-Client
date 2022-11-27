@@ -10,37 +10,12 @@ import {
 } from "firebase/auth";
 import app from "../../firebase/firebase.config";
 import { useState } from "react";
-import { useEffect,  } from "react";
+import { useEffect } from "react";
 import { getUrl } from "../../Util/Util";
 import useAdmin from "../../hooks/useAdmin";
 
 export const AuthContext = createContext();
 const auth = getAuth(app);
-
-export const getJWT = (currentUser) => {
-    console.log("currentUser", currentUser);
-    console.log("JSON.stringify(currentUser)", JSON.stringify(currentUser));
-  // get jwt token
-  fetch(getUrl("/jwt"), {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(currentUser),
-  })
-    .then((res) => {
-    //   if (res.status === 401 || res.status === 403) {
-    //     return logOut();
-    //   }
-      return res.json();
-    })
-    .then((data) => {
-      console.log("token", data);
-      // local storage is the easiest but not the best place to store jwt token
-      localStorage.setItem("jwt-token", data.token);
-      localStorage.setItem("name",data.user.name);
-    });
-};
 
 export const normalizeUserData = (userData) => {
   if (!userData) return userData;
@@ -55,9 +30,7 @@ export const normalizeUserData = (userData) => {
   }
   const role = userRole;
 
-  const user = { uid, name, email, photoURL, role }
-  console.log ("input User", userData);
-  console.log ("normalize User", user);
+  const user = { uid, name, email, photoURL, role };
   return user;
 };
 
@@ -95,6 +68,40 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
+  const getJWT = (currentUser) => {
+    // get jwt token
+    fetch(getUrl("/jwt"), {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(currentUser),
+    })
+      .then((res) => {
+        //   if (res.status === 401 || res.status === 403) {
+        //     return logOut();
+        //   }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("token", data);
+        // local storage is the easiest but not the best place to store jwt token
+        if (data.token) {
+          localStorage.setItem("jwt-token", data.token);
+          localStorage.setItem("name", data.user.name);
+          localStorage.setItem("role", data.user.role);
+
+          const updatedUser = normalizeUserData(currentUser);
+          console.log("onAuthStateChanged updatedUser", updatedUser);
+          setUser(updatedUser);
+        } else {
+          logOut()
+            .then(() => {})
+            .catch((error) => console.error(error));
+        }
+      });
+  };
+
   useEffect(() => {
     let userRole = localStorage.getItem("role");
     if (!userRole) {
@@ -103,9 +110,12 @@ const AuthProvider = ({ children }) => {
     setRole(userRole);
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       const normalizedUser = normalizeUserData(currentUser);
-      console.log("CurrentUser", currentUser);
-      console.log("NormalizedUser", normalizedUser);
+      console.log("onAuthStateChanged CurrentUser", currentUser);
+      console.log("onAuthStateChanged NormalizedUser", normalizedUser);
       setUser(normalizedUser);
+      if (normalizedUser) {
+        getJWT(normalizedUser);
+      }
       setLoading(false);
     });
 
@@ -122,7 +132,6 @@ const AuthProvider = ({ children }) => {
     providerLogin,
     login,
     logOut,
-    setUser
   };
 
   return (

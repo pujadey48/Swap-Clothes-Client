@@ -8,23 +8,33 @@ import Form from "react-bootstrap/Form";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import {
   AuthContext,
-  getJWT,
+  // getJWT,
   normalizeUserData,
 } from "../../contexts/AuthProvider/AuthProvider.js";
 
 const Login = () => {
   const [error, setError] = useState("");
-  const { setLoading, login, user, setUser } = useContext(AuthContext);
+  const { setLoading, login, user } = useContext(AuthContext);
   const { providerLogin } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
   const from = location.state?.from?.pathname || "/";
 
+  // const handleLogOut = () => {
+  //   logOut()
+  //     .then(() => {})
+  //     .catch((error) => console.error(error));
+  // };
+
   const loginDone = (userData) => {
     console.log("user", userData);
-    setUser(userData);
-    getJWT(userData);
+    // updateUser(userData);
+    // getJWT(userData);
+    // if(!localStorage.getItem("jwt-token")){
+    //   handleLogOut();
+    //   return;
+    // }
     navigate(from, { replace: true });
   };
 

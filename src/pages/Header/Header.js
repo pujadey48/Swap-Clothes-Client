@@ -16,9 +16,10 @@ import {
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { FaSignOutAlt } from "react-icons/fa";
+import Logout from "../Logout/Logout";
 
 const Header = () => {
-  const { user, logOut, setUser } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   const { providerLogin } = useContext(AuthContext);
 
   // const isBuyer = user?.role === "buyer";
@@ -34,8 +35,12 @@ const Header = () => {
   };
 
   const loginDone = (userData) => {
-    setUser(userData);
-    getJWT(userData);
+    // updateUser(userData);
+    // getJWT(userData);
+    // if(!localStorage.getItem("jwt-token")){
+    //   handleLogOut();
+    //   return;
+    // }
     console.log("user", userData);
     const from = location.state?.from?.pathname || "/";
     if (from) {
