@@ -26,7 +26,7 @@ const Sidebar = () => {
     <div
       style={{ display: "flex", height: "100vh", overflow: "scroll initial" }}
     >
-      <CDBSidebar textColor="Red" backgroundColor="#f8f9fa">
+      <CDBSidebar textColor="black" backgroundColor="#f8f9fa">
         <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
           <a
             href="/dashboard"

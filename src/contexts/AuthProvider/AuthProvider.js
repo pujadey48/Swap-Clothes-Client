@@ -18,6 +18,8 @@ export const AuthContext = createContext();
 const auth = getAuth(app);
 
 export const getJWT = (currentUser) => {
+    console.log("currentUser", currentUser);
+    console.log("JSON.stringify(currentUser)", JSON.stringify(currentUser));
   // get jwt token
   fetch(getUrl("/jwt"), {
     method: "POST",
@@ -36,6 +38,7 @@ export const getJWT = (currentUser) => {
       console.log("token", data);
       // local storage is the easiest but not the best place to store jwt token
       localStorage.setItem("jwt-token", data.token);
+      localStorage.setItem("name",data.user.name);
     });
 };
 
@@ -43,7 +46,7 @@ export const normalizeUserData = (userData) => {
   if (!userData) return userData;
 
   const uid = userData?.uid || "unregistered";
-  const name = userData?.displayName || "Anonimous";
+  const name = userData?.displayName || localStorage.getItem("name");
   const email = userData?.email;
   const photoURL = userData?.photoURL || "";
   let userRole = localStorage.getItem("role");
@@ -52,7 +55,10 @@ export const normalizeUserData = (userData) => {
   }
   const role = userRole;
 
-  return { uid, name, email, photoURL, role };
+  const user = { uid, name, email, photoURL, role }
+  console.log ("input User", userData);
+  console.log ("normalize User", user);
+  return user;
 };
 
 const AuthProvider = ({ children }) => {
@@ -67,8 +73,9 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, provider);
   };
 
-  const createUser = (email, password, userRole) => {
+  const createUser = (name, email, password, userRole) => {
     setLoading(true);
+    localStorage.setItem("name", name);
     localStorage.setItem("role", userRole);
     setRole(userRole);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -84,6 +91,7 @@ const AuthProvider = ({ children }) => {
   const logOut = () => {
     localStorage.removeItem("jwt-token");
     localStorage.removeItem("role");
+    localStorage.removeItem("name");
     return signOut(auth);
   };
 
@@ -114,6 +122,7 @@ const AuthProvider = ({ children }) => {
     providerLogin,
     login,
     logOut,
+    setUser
   };
 
   return (

@@ -12,7 +12,7 @@ import {
 } from "../../contexts/AuthProvider/AuthProvider.js";
 const Signup = () => {
   const [error, setError] = useState();
-  const { createUser, user } = useContext(AuthContext);
+  const { createUser, user, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -20,7 +20,8 @@ const Signup = () => {
 
   const loginDone = (userData) => {
     console.log("user", userData);
-    getJWT(user);
+    setUser(userData);
+    getJWT(userData);
     console.log(from);
     navigate(from, { replace: true });
   };
@@ -29,11 +30,12 @@ const Signup = () => {
     event.preventDefault();
     const form = event.target;
     console.log("form", form);
+    const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
     const role = form.role.value;
 
-    createUser(email, password, role)
+    createUser(name, email, password, role)
       .then((result) => {
         const userData = normalizeUserData(result.user);
         form.reset();
@@ -60,6 +62,15 @@ const Signup = () => {
           </Alert>
         )}
         <Form onSubmit={handleSignUp}>
+          <Form.Group className="mb-3" controlId="formBasicName">
+            <Form.Label>Full Name</Form.Label>
+            <Form.Control
+              type="text"
+              name="name"
+              placeholder="Enter Full Name"
+              required
+            />
+          </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control
@@ -86,9 +97,6 @@ const Signup = () => {
             <option value="seller">Seller</option>
           </Form.Select>
         </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
-          </Form.Group>
           <Button variant="primary" type="submit">
             Submit
           </Button>

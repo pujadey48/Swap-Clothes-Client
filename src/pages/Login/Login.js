@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { GoogleAuthProvider } from "firebase/auth";
 import { useState } from "react";
 import { useContext } from "react";
@@ -9,13 +9,12 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import {
   AuthContext,
   getJWT,
-  normalizeUserData
-
-} from "../../contexts/AuthProvider/AuthProvider.js"
+  normalizeUserData,
+} from "../../contexts/AuthProvider/AuthProvider.js";
 
 const Login = () => {
-    const [error, setError] = useState("");
-  const { setLoading, login, user } = useContext(AuthContext);
+  const [error, setError] = useState("");
+  const { setLoading, login, user, setUser } = useContext(AuthContext);
   const { providerLogin } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
@@ -24,6 +23,7 @@ const Login = () => {
 
   const loginDone = (userData) => {
     console.log("user", userData);
+    setUser(userData);
     getJWT(userData);
     navigate(from, { replace: true });
   };
@@ -75,7 +75,12 @@ const Login = () => {
       <Container className="w-50">
         <h1 className="fs-3 fw-bold text-primary text-center">Login</h1>
         {error && (
-          <Alert key={"danger"} variant={"danger"} onClose={() => setError("")} dismissible>
+          <Alert
+            key={"danger"}
+            variant={"danger"}
+            onClose={() => setError("")}
+            dismissible
+          >
             {error}
           </Alert>
         )}
@@ -93,15 +98,12 @@ const Login = () => {
               placeholder="Password"
             />
             <Form.Group className="mb-3">
-          <Form.Label >Select role</Form.Label>
-          <Form.Select id="role" name="role">
-            <option value="buyer">Buyer</option>
-            <option value="seller">Seller</option>
-          </Form.Select>
-        </Form.Group>
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
+              <Form.Label>Select role</Form.Label>
+              <Form.Select id="role" name="role">
+                <option value="buyer">Buyer</option>
+                <option value="seller">Seller</option>
+              </Form.Select>
+            </Form.Group>
           </Form.Group>
           <Button variant="primary" type="submit">
             Submit

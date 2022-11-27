@@ -12,6 +12,13 @@ import Categories from "../../pages/Categories/Categories";
 import { getUrl } from "../../Util/Util";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import DisplayError from "../../pages/DisplayError/DisplayError";
+import ShowCategoryProducts from "../../pages/showCategoryProducts/ShowCategoryProducts";
+
+
+const ShowCategoryProduct = async(name) =>{
+    const categoryProducts = await fetch(getUrl(`/showCategoryProducts/${name}`))
+    return categoryProducts;
+}
 
 export const routes = createBrowserRouter([
     {
@@ -38,7 +45,12 @@ export const routes = createBrowserRouter([
                 path:"/categories",
                 element:<Categories></Categories>,
                 
-            }
+            },
+            {
+                path:"/showCategoryProducts/:name",
+                element:<ShowCategoryProducts></ShowCategoryProducts>,
+                loader:({params}) => ShowCategoryProduct(params.name),
+            },
         ]
     },
     {

@@ -21,7 +21,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa";
 
 const Header = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut, setUser } = useContext(AuthContext);
   const { providerLogin } = useContext(AuthContext);
 
   const isBuyer = user?.role === "buyer";
@@ -37,6 +37,7 @@ const Header = () => {
   };
 
   const loginDone = (userData) => {
+    setUser(userData);
     getJWT(userData);
     console.log("user", userData);
     const from = location.state?.from?.pathname || "/";
@@ -64,7 +65,7 @@ const Header = () => {
         variant="light"
       >
         <Container>
-          <Navbar.Brand href="/" className="fs-2 fw-semibold text-danger">
+          <Navbar.Brand href="/" className="fs-2 fw-semibold text-dark">
             <img
               alt=""
               src="/logo3.jpeg"
@@ -135,7 +136,7 @@ const Header = () => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                  <Dropdown.Item href="#/">{user?.displayName}</Dropdown.Item>
+                  <Dropdown.Item href="#/">{user?.name}</Dropdown.Item>
                   <Dropdown.Item onClick={handleLogOut}>
                     Log out <FaSignOutAlt></FaSignOutAlt>
                   </Dropdown.Item>

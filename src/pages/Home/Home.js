@@ -1,5 +1,5 @@
 import React from "react";
-import { Carousel, Container } from "react-bootstrap";
+import { Button, Card, Carousel, Col, Container, Row } from "react-bootstrap";
 import Categories from "../Categories/Categories";
 import Footer from "../Footer/Footer";
 
@@ -38,11 +38,29 @@ const Home = () => {
       </Carousel.Item> */}
       </Carousel>
       <div>
-        <Categories>
-        
-        </Categories>
-        
+        <Categories></Categories>
       </div>
+      {/* ------ section start ------- */}
+
+      <div className="mt-5">
+        <Row>
+          <Col className="p-5">
+            <div className="d-flex align-items-center h-100">
+            <div>
+            <h1>Our Story</h1>
+            <p>Founded by sisters, Harriett and Izzie, Sestri was created to deliver high quality, timeless pieces that could be pulled out of your wardrobe year after year. Investment and seasonless designs are the forefront of the brand and every piece is crafted from the highest quality fabrics and designed in-house in the UK.</p>
+            <Button variant="dark">Shop Now</Button>
+            </div>
+            </div>
+          </Col>
+          <Col className="p-5 text-center">
+            <Card style={{ width: '18rem' }}>
+              <Card.Img variant="top" src="sectionPic2.jpeg" />
+            </Card>
+          </Col>
+        </Row>
+      </div>
+
       <Footer></Footer>
     </Container>
   );

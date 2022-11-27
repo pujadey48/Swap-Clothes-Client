@@ -8,12 +8,16 @@ const CategoryCard = ({category}) => {
             <Card style={{ }}>
       <Card.Img variant="top" src={image} />
       <Card.ImgOverlay>
-        <Card.Title className=''>{name}</Card.Title>
+        <Card.Title className='fs-3'>{name}</Card.Title>
         {/* <Card.Text>
           This is a wider card with supporting text below as a natural lead-in
           to additional content. This content is a little bit longer.
         </Card.Text>
         <Card.Text>Last updated 3 mins ago</Card.Text> */}
+        <div className='d-flex h-50 align-items-end justify-content-center'>
+        {/* <Button variant="primary">Shop Now</Button> */}
+        <a href={`/showCategoryProducts/${name}`} className='stretched-link fs-3 fw-semibold text-dark text-decoration-none'>Shop Now</a>
+        </div>
       </Card.ImgOverlay>
     </Card>
         </div>
