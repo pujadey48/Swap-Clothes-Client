@@ -5,10 +5,7 @@ import {
   Dropdown,
   Image,
   Nav,
-  ButtonGroup,
-  DropdownButton,
   Navbar,
-  NavDropdown,
 } from "react-bootstrap";
 import { GoogleAuthProvider } from "firebase/auth";
 import {
@@ -24,8 +21,8 @@ const Header = () => {
   const { user, logOut, setUser } = useContext(AuthContext);
   const { providerLogin } = useContext(AuthContext);
 
-  const isBuyer = user?.role === "buyer";
-  const isSeller = user?.role === "seller";
+  // const isBuyer = user?.role === "buyer";
+  // const isSeller = user?.role === "seller";
 
   const location = useLocation();
   const navigate = useNavigate();
