@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Card, Carousel, Col, Container, Row } from "react-bootstrap";
 import Categories from "../Categories/Categories";
 import Footer from "../Footer/Footer";
+import AdvertisedProducts from "./AdvertisedProducts";
 
 const Home = () => {
   return (
@@ -39,6 +40,10 @@ const Home = () => {
       </Carousel>
       <div>
         <Categories></Categories>
+      </div>
+
+      <div className="mt-5 mb-5">
+        <AdvertisedProducts></AdvertisedProducts>
       </div>
       {/* ------ section start ------- */}
 
