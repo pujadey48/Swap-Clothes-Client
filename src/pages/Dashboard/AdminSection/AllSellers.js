@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Container } from "react-bootstrap";
 
-const MyProducts = () => {
+const AllSellers = () => {
   const { data: myproducts = [], refetch } = useQuery({
     queryKey: ["myproducts"],
     queryFn: async () => {
@@ -40,7 +40,7 @@ const MyProducts = () => {
 
   const deleteProduct= (id)=>{
     const proceed = window.confirm(
-        "Are you sure, you want to delete this product?"
+        "Are you sure, you want to delete this review?"
       );
       if (proceed) {
         fetch(getUrl(`/product/${id}`), {
@@ -117,4 +117,4 @@ const MyProducts = () => {
   );
 };
 
-export default MyProducts;
+export default AllSellers;

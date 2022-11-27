@@ -13,6 +13,12 @@ import { getUrl } from "../../Util/Util";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import DisplayError from "../../pages/DisplayError/DisplayError";
 import ShowCategoryProducts from "../../pages/showCategoryProducts/ShowCategoryProducts";
+import AdminRoute from "../AdminRoute/AdminRoute";
+import AllBuyers from "../../pages/Dashboard/AdminSection/AllBuyers";
+import AllSellers from "../../pages/Dashboard/AdminSection/AllSellers";
+import Dashboard from "../../pages/Dashboard/Dashboard/Dashboard";
+import SellerRoute from "../SellerRoute/SellerRoute";
+import BuyerRoute from "../BuyerRoute/BuyerRoute";
 
 
 const ShowCategoryProduct = async(name) =>{
@@ -59,17 +65,28 @@ export const routes = createBrowserRouter([
         errorElement: <DisplayError></DisplayError>,
         children:[
             {
+                path:"/dashboard",
+                element: <Dashboard></Dashboard>,
+            },
+            {
                 path:"/dashboard/addProducts",
-                element: <AddProducts></AddProducts>,
-
+                element: <SellerRoute><AddProducts></AddProducts></SellerRoute>,
             },
             {
                 path:'/dashboard/myOrders',
-                element: <MyOrders></MyOrders>
+                element: <BuyerRoute><MyOrders></MyOrders></BuyerRoute> 
             },
             {
                 path: "/dashboard/myProducts",
-                element: <MyProducts></MyProducts>,
+                element: <SellerRoute><MyProducts></MyProducts></SellerRoute>,
+            },
+            {
+                path: "/dashboard/allBuyers",
+                element: <AdminRoute><AllBuyers></AllBuyers></AdminRoute>,
+            },
+            {
+                path: "/dashboard/allSellers",
+                element: <AdminRoute><AllSellers></AllSellers></AdminRoute>,
             },
             
         ]

@@ -7,7 +7,7 @@ const AdminOptions = () => {
     <Fragment>
       <NavLink
         exact
-        to="/dashboard/myOrders"
+        to="/dashboard/allBuyers"
         activeClassName="activeClicked"
         style={{ color: "inherit" }}
       >
@@ -15,11 +15,19 @@ const AdminOptions = () => {
       </NavLink>
       <NavLink
         exact
-        to="/dashboard/myOrders"
+        to="/dashboard/allSellers"
         activeClassName="activeClicked"
         style={{ color: "inherit" }}
       >
         <CDBSidebarMenuItem icon="heart">Sellers</CDBSidebarMenuItem>
+      </NavLink>
+      <NavLink
+        exact
+        to="/dashboard/allSellers"
+        activeClassName="activeClicked"
+        style={{ color: "inherit" }}
+      >
+        <CDBSidebarMenuItem icon="heart">Reported Products</CDBSidebarMenuItem>
       </NavLink>
     </Fragment>
   );

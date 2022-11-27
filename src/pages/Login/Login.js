@@ -77,9 +77,9 @@ const Login = () => {
       });
   };
 
-  if (user) {
-    return <Navigate to={from} state={{ from: location }} replace></Navigate>;
-  }
+  // if (user) {
+  //   return <Navigate to={from} state={{ from: location }} replace></Navigate>;
+  // }
   return (
     <div>
       <Container className="w-50">
