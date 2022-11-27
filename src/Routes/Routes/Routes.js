@@ -19,6 +19,7 @@ import AllSellers from "../../pages/Dashboard/AdminSection/AllSellers";
 import Dashboard from "../../pages/Dashboard/Dashboard/Dashboard";
 import SellerRoute from "../SellerRoute/SellerRoute";
 import BuyerRoute from "../BuyerRoute/BuyerRoute";
+import ReportedProducts from "../../pages/Dashboard/AdminSection/ReportedProducts";
 
 
 const ShowCategoryProduct = async(name) =>{
@@ -87,6 +88,10 @@ export const routes = createBrowserRouter([
             {
                 path: "/dashboard/allSellers",
                 element: <AdminRoute><AllSellers></AllSellers></AdminRoute>,
+            },
+            {
+                path: "/dashboard/reportedProducts",
+                element: <AdminRoute><ReportedProducts></ReportedProducts></AdminRoute>,
             },
             
         ]

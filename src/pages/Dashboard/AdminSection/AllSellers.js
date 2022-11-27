@@ -5,19 +5,19 @@ import Table from 'react-bootstrap/Table';
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Container } from "react-bootstrap";
+import { Container, Image } from "react-bootstrap";
 
 const AllSellers = () => {
-  const { data: myproducts = [], refetch } = useQuery({
-    queryKey: ["myproducts"],
+  const { data: sellers = [], refetch } = useQuery({
+    queryKey: ["sellers"],
     queryFn: async () => {
-      const res = await await fetch(getUrl("/myproducts"), {
+      const res = await await fetch(getUrl("/getAllSellers"), {
         headers: {
           authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
         },
       });
       const data = await res.json();
-      console.log("myproducts", data);
+      console.log("buyers", data);
       return data;
     },
   });
@@ -32,18 +32,12 @@ const AllSellers = () => {
     });
   };
 
-  const showAdvertiseToastMessage = () => {
-    toast.success("Advertisement enabled for this product!", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
-
-  const deleteProduct= (id)=>{
+  const deleteUser= (uid)=>{
     const proceed = window.confirm(
-        "Are you sure, you want to delete this review?"
+        "Are you sure, you want to delete this user?"
       );
       if (proceed) {
-        fetch(getUrl(`/product/${id}`), {
+        fetch(getUrl(`/user/${uid}`), {
           method: "DELETE",
           headers: {
             authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
@@ -59,12 +53,19 @@ const AllSellers = () => {
       }
   }
 
-  const advertiseProduct= (id)=>{
+
+  const showVerifiedSuccessfullyToast = () => {
+    toast.success("The user is verified!", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+  };
+
+  const verifySeller= (uid)=>{
     const proceed = window.confirm(
-        "Do you want to add this product for advertisement?"
+        "Do you want to set this seller as verified?"
       );
       if (proceed) {
-        fetch(getUrl(`/addToAdvertisement/${id}`), {
+        fetch(getUrl(`/verifySeller/${uid}`), {
           method: "PATCH",
           headers: {
             authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
@@ -75,38 +76,43 @@ const AllSellers = () => {
             console.log(data);
             if (data.modifiedCount > 0) {
                 refetch();
-                showAdvertiseToastMessage();
+                showVerifiedSuccessfullyToast();
             }
           });
       }
   }
 
+
   return (
     <Container>
-      <h2>My Products</h2>
+      <h2>All Sellers</h2>
       <ToastContainer />
       <Table striped>
       <thead>
         <tr>
           <th>#</th>
-          <th>Name</th>
-          <th>Selling Price</th>
-          <th>Status</th>
+          <th>Image</th>
+          <th>Full Name</th>
+          <th>email</th>
           <th>Delete</th>
-          <th>Advertise</th>
+          <th>Verify</th>
         </tr>
       </thead>
       <tbody>
-      {myproducts.map((product, index) => (
+      {sellers.map((user, index) => (
           <tr>
           <td>{index}</td>
-          <td>{product.name}</td>
-          <td>{product.selling_price}</td>
-          <td>{product.status}</td>
-          <td><Link onClick={()=>{deleteProduct(product._id)}}>Delete</Link></td>
+          <td><Image
+                    style={{ height: "30px" }}
+                    roundedCircle
+                    src={user.photoURL ? user.photoURL : "/avatar.webp"}
+                  ></Image></td>
+          <td>{user.name}</td>
+          <td>{user.email}</td>
+          <td><Link onClick={()=>{deleteUser(user.uid)}}>Delete</Link></td>
           <td>
-            {product.status==='available' && !product.show_in_ad && (<Link onClick={()=>{advertiseProduct(product._id)}}>Advertise</Link>)}
-            {product.status==='available' && product.show_in_ad && (<span >Advertising</span>)}
+            { !user.verified && (<Link onClick={()=>{verifySeller(user.uid)}}>Verify now</Link>)}
+            { user.verified && (<span >verified</span>)}
           </td>
         </tr>
       ))}
@@ -117,4 +123,4 @@ const AllSellers = () => {
   );
 };
 
-export default AllSellers;
+export default AllSellers ;

@@ -11,7 +11,7 @@ const AdminOptions = () => {
         activeClassName="activeClicked"
         style={{ color: "inherit" }}
       >
-        <CDBSidebarMenuItem icon="heart">Buyers</CDBSidebarMenuItem>
+        <CDBSidebarMenuItem icon="users">Buyers</CDBSidebarMenuItem>
       </NavLink>
       <NavLink
         exact
@@ -19,15 +19,15 @@ const AdminOptions = () => {
         activeClassName="activeClicked"
         style={{ color: "inherit" }}
       >
-        <CDBSidebarMenuItem icon="heart">Sellers</CDBSidebarMenuItem>
+        <CDBSidebarMenuItem icon="user">Sellers</CDBSidebarMenuItem>
       </NavLink>
       <NavLink
         exact
-        to="/dashboard/allSellers"
+        to="/dashboard/reportedProducts"
         activeClassName="activeClicked"
         style={{ color: "inherit" }}
       >
-        <CDBSidebarMenuItem icon="heart">Reported Products</CDBSidebarMenuItem>
+        <CDBSidebarMenuItem icon="file">Reported Products</CDBSidebarMenuItem>
       </NavLink>
     </Fragment>
   );
