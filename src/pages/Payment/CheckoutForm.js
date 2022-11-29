@@ -14,6 +14,7 @@ const CheckoutForm = ({ booking }) => {
   const [processing, setProcessing] = useState(false);
   const [transactionId, setTransactionId] = useState("");
   const [clientSecret, setClientSecret] = useState("");
+  const [productError, setProductError] = useState("");
 
   const stripe = useStripe();
   const elements = useElements();
@@ -30,7 +31,13 @@ const CheckoutForm = ({ booking }) => {
       body: JSON.stringify({ productSellingPrice }),
     })
       .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret));
+      .then((data) => {
+        if (data.clientSecret) {
+          setClientSecret(data.clientSecret);
+        } else {
+          setProductError(data.errorMessage);
+        }
+      });
   }, [productSellingPrice]);
 
   const showToastMessage = (message) => {
@@ -116,6 +123,10 @@ const CheckoutForm = ({ booking }) => {
     }
     setProcessing(false);
   };
+
+  if (productError) {
+    return <h3 className="text-danger">{productError}</h3>;
+  }
 
   return (
     <Fragment>

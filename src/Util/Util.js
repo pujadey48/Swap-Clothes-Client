@@ -1,7 +1,7 @@
 export const getUrl = (endpoint) => {
   // https://assignment-11-server-pujadey48.vercel.app
-  return `http://localhost:5000${endpoint}`;
-  // return `https://assignment-12-server-pujadey48.vercel.app${endpoint}`;
+  // return `http://localhost:5000${endpoint}`;
+  return `https://assignment-12-server-pujadey48.vercel.app${endpoint}`;
 };
 
 export const timeout = (delay) => {
