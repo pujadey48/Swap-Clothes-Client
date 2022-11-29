@@ -71,15 +71,17 @@ const ShowCategoryProducts = () => {
   };
 
   const handleBookingStatus = async (status, message) => {
-    if(status){
+    if (status) {
       handleClose();
-      showToastMessage("Booking added successfully!! Redirecting to My Orders.");
+      showToastMessage(
+        "Booking added successfully!! Redirecting to My Orders."
+      );
       await timeout(3000);
-      navigate('/dashboard/myOrders', { replace: true });
+      navigate("/dashboard/myOrders", { replace: true });
     } else {
       showToastMessage("Failed!! " + message);
     }
-  }
+  };
 
   return (
     <Container>
@@ -93,6 +95,15 @@ const ShowCategoryProducts = () => {
           product={selectedProduct}
           handleBookingStatus={handleBookingStatus}
         ></SharedModal>
+
+        {products.length == 0 && (
+          <div className="d-flex justify-content-center w-100 m-5">
+            <h2 className="text-danger text-center">
+              No products available in this category!!
+            </h2>
+          </div>
+        )}
+
         {products.map((product) => (
           //   <Card style={{ width: "18rem" }}>
           <div className=" col-lg-3 col-md-6 col-12 p-1">
@@ -128,7 +139,9 @@ const ShowCategoryProducts = () => {
                 </ListGroup.Item>
               </ListGroup>
               <Card.Body>
-                <Card.Link onClick={() => handleShow(product)}>Book Now</Card.Link>
+                <Card.Link onClick={() => handleShow(product)}>
+                  Book Now
+                </Card.Link>
                 <Card.Link onClick={() => reportProduct(product._id)}>
                   Report
                 </Card.Link>

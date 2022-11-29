@@ -11,7 +11,7 @@ import MyProducts from "../../pages/Dashboard/Myproducts/MyProducts";
 import Categories from "../../pages/Categories/Categories";
 import { getUrl } from "../../Util/Util";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
-import DisplayError from "../../pages/DisplayError/DisplayError";
+import DisplayError from "../../pages/Error/DisplayError/DisplayError";
 import ShowCategoryProducts from "../../pages/showCategoryProducts/ShowCategoryProducts";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import AllBuyers from "../../pages/Dashboard/AdminSection/AllBuyers";
@@ -22,11 +22,21 @@ import BuyerRoute from "../BuyerRoute/BuyerRoute";
 import ReportedProducts from "../../pages/Dashboard/AdminSection/ReportedProducts";
 import Blog from "../../pages/Blog/Blog"
 import Payment from "../../pages/Payment/Payment";
+import Error404Page from "../../pages/Error/Error404Page";
 
 
 const ShowCategoryProduct = async(name) =>{
     const categoryProducts = await fetch(getUrl(`/showCategoryProducts/${name}`))
     return categoryProducts;
+}
+
+const GetBookingByID = async(id) =>{
+    const booking = await fetch(getUrl(`/booking/${id}`), {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("jwt-token")}`,
+        },
+      })
+    return booking;
 }
 
 export const routes = createBrowserRouter([
@@ -64,6 +74,10 @@ export const routes = createBrowserRouter([
                 path:"/blog",
                 element:<Blog></Blog>,
             },
+            {
+              path: "*",
+              element: <Error404Page></Error404Page>,
+            },
         ]
     },
     {
@@ -85,7 +99,8 @@ export const routes = createBrowserRouter([
             },
             {
                 path:'/dashboard/payment/:id',
-                element: <BuyerRoute><Payment></Payment></BuyerRoute> 
+                element: <BuyerRoute><Payment></Payment></BuyerRoute> ,
+                loader:({params}) => GetBookingByID(params.id),
             },
             {
                 path: "/dashboard/myProducts",
@@ -102,6 +117,10 @@ export const routes = createBrowserRouter([
             {
                 path: "/dashboard/reportedProducts",
                 element: <AdminRoute><ReportedProducts></ReportedProducts></AdminRoute>,
+            },
+            {
+              path: "/dashboard/*",
+              element: <Error404Page></Error404Page>,
             },
             
         ]

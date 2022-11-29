@@ -46,7 +46,7 @@ const MyOrders = () => {
     //   </Card>
     // </div>
     <Container>
-      <h2>My Products</h2>
+      <h2>My Orders</h2>
       <ToastContainer />
       <Table striped>
       <thead>

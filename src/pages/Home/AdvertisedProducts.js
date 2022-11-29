@@ -58,7 +58,9 @@ const AdvertisedProducts = () => {
   const handleBookingStatus = async (status, message) => {
     if (status) {
       handleClose();
-      showToastMessage("Booking added successfully!! Redirecting to My Orders.");
+      showToastMessage(
+        "Booking added successfully!! Redirecting to My Orders."
+      );
       await timeout(3000);
       navigate("/dashboard/myOrders", { replace: true });
     } else {
@@ -80,6 +82,14 @@ const AdvertisedProducts = () => {
           product={selectedProduct}
           handleBookingStatus={handleBookingStatus}
         ></SharedModal>
+
+        {advertisedProducts.length == 0 && (
+          <div className="d-flex justify-content-center w-100 m-5">
+            <h2 className="text-danger text-center">
+              No products available for advertisement!!
+            </h2>
+          </div>
+        )}
 
         <div className="d-flex flex-wrap">
           {advertisedProducts.map((product) => (
@@ -121,7 +131,9 @@ const AdvertisedProducts = () => {
                   </ListGroup.Item>
                 </ListGroup>
                 <Card.Body>
-                  <Card.Link onClick={() => handleShow(product)}>Book Now</Card.Link>
+                  <Card.Link onClick={() => handleShow(product)}>
+                    Book Now
+                  </Card.Link>
                 </Card.Body>
               </Card>
             </div>
