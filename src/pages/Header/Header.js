@@ -86,7 +86,7 @@ const Header = () => {
             </Nav.Item>
 
             <Nav.Item>
-              <Nav.Link href="/blogs">Blogs</Nav.Link>
+              <Nav.Link href="/blog">Blogs</Nav.Link>
             </Nav.Item>
             {user && (
               <Nav.Item>

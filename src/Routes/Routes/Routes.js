@@ -5,8 +5,8 @@ import Login from "../../pages/Login/Login";
 import Logout from "../../pages/Logout/Logout";
 import Signup from "../../pages/Signup/Signup";
 import DashboardLauout from "../../layout/DashboardLayout";
-import MyOrders from "../../pages/Dashboard/MyOrders/MyOrders";
-import AddProducts from "../../pages/Dashboard/AddProducts/AddProducts";
+import MyOrders from "../../pages/Dashboard/BuyerSection/MyOrders/MyOrders";
+import AddProducts from "../../pages/Dashboard/SellerSection/AddProducts/AddProducts";
 import MyProducts from "../../pages/Dashboard/Myproducts/MyProducts";
 import Categories from "../../pages/Categories/Categories";
 import { getUrl } from "../../Util/Util";
@@ -20,6 +20,7 @@ import Dashboard from "../../pages/Dashboard/Dashboard/Dashboard";
 import SellerRoute from "../SellerRoute/SellerRoute";
 import BuyerRoute from "../BuyerRoute/BuyerRoute";
 import ReportedProducts from "../../pages/Dashboard/AdminSection/ReportedProducts";
+import Blog from "../../pages/Blog/Blog"
 
 
 const ShowCategoryProduct = async(name) =>{
@@ -57,6 +58,10 @@ export const routes = createBrowserRouter([
                 path:"/showCategoryProducts/:name",
                 element:<ShowCategoryProducts></ShowCategoryProducts>,
                 loader:({params}) => ShowCategoryProduct(params.name),
+            },
+            {
+                path:"/blog",
+                element:<Blog></Blog>,
             },
         ]
     },

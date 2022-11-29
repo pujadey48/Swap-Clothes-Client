@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
-import { useLoaderData } from "react-router-dom";
-import { getUrl, timestampToDate } from "../../Util/Util";
+import { useNavigate } from "react-router-dom";
+import { getUrl, timeout, timestampToDate } from "../../Util/Util";
 import { FaCheckCircle } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import SharedModal from "../Componemts/SharedModal";
+import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 
 const AdvertisedProducts = () => {
   const { data: advertisedProducts = [], refetch } = useQuery({
@@ -25,30 +27,60 @@ const AdvertisedProducts = () => {
     refetch();
   }, [refetch]);
 
-  const showVerifiedSuccessfullyToast = () => {
-    toast.success("Product reported successfully", {
+  const { user } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const handleClose = () => {
+    setSelectedProduct(null);
+    setShow(false);
+  };
+  const [show, setShow] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const handleShow = (product) => {
+    if (user && user.role === "buyer") {
+      setSelectedProduct(product);
+      setShow(true);
+    } else {
+      alert("Please login as a buyer");
+      navigate("/login", { replace: true });
+      // return <Navigate to="/login" state={{from: location}} replace></Navigate>;
+    }
+  };
+
+  const showToastMessage = (message) => {
+    toast.success(message, {
       position: toast.POSITION.TOP_RIGHT,
     });
   };
 
-  const bookNow = (id) => {
-    const proceed = window.confirm("Do you want to book this product?");
-    if (proceed) {
-      // axios.patch(getUrl(`/reportProduct/${id}`))
-      //   .then((res) => res.data)
-      //   .then((data) => {
-      //     console.log(data);
-      //     if (data.modifiedCount > 0) {
-      //         showVerifiedSuccessfullyToast();
-      //     }
-      //   });
+  const handleBookingStatus = async (status, message) => {
+    if (status) {
+      handleClose();
+      showToastMessage("Booking added successfully!! Redirecting to My Orders.");
+      await timeout(3000);
+      navigate("/dashboard/myOrders", { replace: true });
+    } else {
+      showToastMessage("Failed!! " + message);
     }
   };
 
   if (advertisedProducts.length > 0) {
     return (
       <Container>
-      <h2 className="text-center mt-5">Advertised Products</h2>
+        <h2 className="text-center mt-5">Advertised Products</h2>
+
+        <ToastContainer />
+
+        <SharedModal
+          key={"hijibiji"}
+          show={show}
+          handleClose={handleClose}
+          product={selectedProduct}
+          handleBookingStatus={handleBookingStatus}
+        ></SharedModal>
+
         <div className="d-flex flex-wrap">
           {advertisedProducts.map((product) => (
             //   <Card style={{ width: "18rem" }}>
@@ -89,7 +121,7 @@ const AdvertisedProducts = () => {
                   </ListGroup.Item>
                 </ListGroup>
                 <Card.Body>
-                  <Card.Link onClick={() => bookNow()}>Book Now</Card.Link>
+                  <Card.Link onClick={() => handleShow(product)}>Book Now</Card.Link>
                 </Card.Body>
               </Card>
             </div>
@@ -98,7 +130,7 @@ const AdvertisedProducts = () => {
       </Container>
     );
   } else {
-    return <div/>
+    return <div />;
   }
 };
 
