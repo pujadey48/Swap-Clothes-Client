@@ -21,6 +21,7 @@ import SellerRoute from "../SellerRoute/SellerRoute";
 import BuyerRoute from "../BuyerRoute/BuyerRoute";
 import ReportedProducts from "../../pages/Dashboard/AdminSection/ReportedProducts";
 import Blog from "../../pages/Blog/Blog"
+import Payment from "../../pages/Payment/Payment";
 
 
 const ShowCategoryProduct = async(name) =>{
@@ -81,6 +82,10 @@ export const routes = createBrowserRouter([
             {
                 path:'/dashboard/myOrders',
                 element: <BuyerRoute><MyOrders></MyOrders></BuyerRoute> 
+            },
+            {
+                path:'/dashboard/payment/:id',
+                element: <BuyerRoute><Payment></Payment></BuyerRoute> 
             },
             {
                 path: "/dashboard/myProducts",
