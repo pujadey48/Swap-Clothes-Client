@@ -28,10 +28,11 @@ const CheckoutForm = ({ booking }) => {
         "Content-Type": "application/json",
         authorization: `bearer ${localStorage.getItem("accessToken")}`,
       },
-      body: JSON.stringify({ productSellingPrice }),
+      body: JSON.stringify(booking),
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log("data", data);
         if (data.clientSecret) {
           setClientSecret(data.clientSecret);
         } else {
