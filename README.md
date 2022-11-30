@@ -17,7 +17,17 @@ adminPassword: admin1234
 
 
 ## Description
-1.
+1. User will able to check chetagoris product.
+2. Buyer can book products and pay and report about products.
+3. Seller can add products, advertised products and view their added products .
+4. Admin can see all buyers and seller. Admin can aslo varified seller, delete reported products and delete users.
+5. Blogs page is also added.
+6. Implemented users Dashboard.
 
 ## Technologies used in this project
-1.
+1. This project was build with `react` framework.
+2. For design and layout `react-bootstrap` and `bootstrap` lib is used.
+3. For showing icons `react-icon` is used.
+4. `firebase` is used for authentication and authorization.
+5. `react-router-dom` is used for routing and navigation.
+6. Stripe payment getway used.
